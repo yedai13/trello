@@ -29,11 +29,11 @@ const AddCardorList = ({ type }) => {
   return (
     <Box className={collapseContainer}>
       <Collapse in={open}>
-        <AddCardOrListText type={type} />
+        <AddCardOrListText type={type} setOpen={setOpen} />
       </Collapse>
 
       <Collapse in={!open}>
-        <Paper className={addCardOrListText}>
+        <Paper className={addCardOrListText} onClick={() => setOpen(true)}>
           <Typography variant="body2">
             {type === "card" ? "+ Añadir una tarjeta" : "+ Añadir otra lista"}
           </Typography>
