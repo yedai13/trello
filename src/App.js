@@ -1,10 +1,11 @@
-import { CssBaseline } from "@material-ui/core";
-import "./App.css";
-import TrelloList from "./components/TrelloList";
-import backgoundMontain from "./img/montañas.jpg";
-
+import { CssBaseline, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import TrelloList from "./components/TrelloList";
 import AddCardOrList from "./components/AddCardOrList";
+import backgoundMontain from "./img/montañas.jpg";
+import mockData from "./mockdata";
+import "./App.css";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -20,17 +21,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
+  const [data, setData] = useState(mockData);
   const { background, container } = useStyles();
   return (
-    <div className={background}>
+    <Box className={background}>
       <CssBaseline />
-      <div className={container}>
-        <TrelloList />
-        <TrelloList />
-        <TrelloList />
+      <Box className={container}>
+        {data.listIds.map((listId) => {
+          const list = data.lists[listId];
+          return <TrelloList list={list} key={listId} />;
+        })}
+
         <AddCardOrList type="list" />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
