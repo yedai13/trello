@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     width: 300,
     backgroundColor: "#EBECF0",
     margin: theme.spacing(2),
+    padding: theme.spacing(1),
   },
 }));
 
