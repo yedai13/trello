@@ -9,8 +9,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: 300,
     backgroundColor: "#EBECF0",
-    margin: theme.spacing(2),
-    padding: theme.spacing(1),
+    margin: theme.spacing(1),
   },
 }));
 
@@ -19,6 +18,8 @@ const TrelloList = () => {
   return (
     <Paper className={paper}>
       <ListTitle />
+      <TrelloCard />
+      <TrelloCard />
       <TrelloCard />
       <AddCardorList />
     </Paper>

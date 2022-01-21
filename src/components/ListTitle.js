@@ -5,6 +5,8 @@ import { MoreHoriz } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   title: {
+    margin: theme.spacing(1),
+    paddingTop: 5,
     display: "flex",
   },
   titleText: {
