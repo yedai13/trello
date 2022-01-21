@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddCardOrListText = () => {
+const AddCardOrListText = ({ type }) => {
   const [title, setTitle] = useState("");
 
   const { input, paper, confirm, button } = useStyles();
@@ -35,13 +35,17 @@ const AddCardOrListText = () => {
           inputProps={{ className: input }}
           multiline
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Introduzca un título para esta tarjeta..."
+          placeholder={
+            type === "card"
+              ? "Introduzca un título para esta tarjeta..."
+              : "Introduzca el título de la lista..."
+          }
           value={title}
         />
       </Paper>
       <Box className={confirm}>
         <Button variant="contained" color="primary" className={button}>
-          Añadir tarjeta
+          {type === "card" ? "Añadir tarjeta" : "Añadir lista"}
         </Button>
         <IconButton>
           <Clear />

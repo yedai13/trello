@@ -22,19 +22,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddCardorList = () => {
-  const [open, setOpen] = useState(false);
+const AddCardorList = ({ type }) => {
+  const [open, setOpen] = useState(true);
 
   const { addCardOrListText, collapseContainer } = useStyles();
   return (
     <Box className={collapseContainer}>
       <Collapse in={open}>
-        <AddCardOrListText />
+        <AddCardOrListText type={type} />
       </Collapse>
 
       <Collapse in={!open}>
         <Paper className={addCardOrListText}>
-          <Typography variant="body2">+ Add a card</Typography>
+          <Typography variant="body2">
+            {type === "card" ? "+ Añadir una tarjeta" : "+ Añadir otra lista"}
+          </Typography>
         </Paper>
       </Collapse>
     </Box>

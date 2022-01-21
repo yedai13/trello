@@ -21,7 +21,7 @@ const TrelloList = () => {
       <TrelloCard />
       <TrelloCard />
       <TrelloCard />
-      <AddCardorList />
+      <AddCardorList type="card" />
     </Paper>
   );
 };

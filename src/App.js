@@ -28,7 +28,7 @@ function App() {
         <TrelloList />
         <TrelloList />
         <TrelloList />
-        <AddCardOrList />
+        <AddCardOrList type="list" />
       </div>
     </div>
   );
