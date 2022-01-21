@@ -4,7 +4,9 @@ import AddCardOrListText from "./AddCardOrListText";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  collapseContainer: {},
+  collapseContainer: {
+    marginTop: theme.spacing(1),
+  },
   addCardOrListText: {
     backgroundColor: "#EBECF0",
     boxShadow: "none",
@@ -12,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     color: "#5E6C84",
     "&:hover": {
-      // backgroundColor:  fade("#000", 0.25)
+      // backgroundColor: fade("#000", 0.25),
       backgroundColor: "#dadce2",
       color: "#172b4d",
       cursor: "pointer",
