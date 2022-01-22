@@ -7,6 +7,7 @@ import AddCardOrList from "./components/AddCardOrList";
 import backgoundMontain from "./img/montañas.jpg";
 import mockData from "./mockdata";
 import ContextAPI from "./ContextAPI";
+import uuid from "react-uuid";
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -37,8 +38,26 @@ function App() {
     });
   };
 
+  const addCard = (title, listId) => {
+    const newCardId = uuid();
+    const newCard = {
+      id: newCardId,
+      title: title,
+    };
+    const list = data.lists[listId];
+    list.cards = [...list.cards, newCard];
+    setData({
+      ...data,
+      lists: {
+        ...data.lists,
+        listId: list,
+      },
+    });
+  };
+  const addList = () => {};
+
   return (
-    <ContextAPI.Provider value={{ updateListTitle }}>
+    <ContextAPI.Provider value={{ addCard, addList, updateListTitle }}>
       <Box className={background}>
         <CssBaseline />
         <Box className={container}>

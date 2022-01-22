@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { InputBase, Paper, Box, Button, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Clear } from "@material-ui/icons";
+import ContextAPI from "../ContextAPI";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -23,15 +24,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddCardOrListText = ({ type, setOpen }) => {
+const AddCardOrListText = ({ type, setOpen, listId }) => {
   const [title, setTitle] = useState("");
-
+  const { addCard, addList } = useContext(ContextAPI);
   const { input, paper, confirm, button } = useStyles();
+
+  const handleAddCardOrList = () => {
+    if (type === "card") {
+      addCard(title, listId);
+    } else {
+      addList(title);
+    }
+    setTitle("");
+    setOpen(false);
+  };
 
   return (
     <Box>
       <Paper className={paper}>
         <InputBase
+          autoFocus
           inputProps={{ className: input }}
           multiline
           onBlur={() => setOpen(false)}
@@ -45,7 +57,12 @@ const AddCardOrListText = ({ type, setOpen }) => {
         />
       </Paper>
       <Box className={confirm}>
-        <Button variant="contained" color="primary" className={button}>
+        <Button
+          variant="contained"
+          color="primary"
+          className={button}
+          onClick={handleAddCardOrList}
+        >
           {type === "card" ? "Añadir tarjeta" : "Añadir lista"}
         </Button>
         <IconButton onClick={() => setOpen(false)}>

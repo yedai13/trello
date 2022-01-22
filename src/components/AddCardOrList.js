@@ -22,14 +22,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddCardorList = ({ type }) => {
+const AddCardorList = ({ type, listId }) => {
   const [open, setOpen] = useState(false);
 
   const { addCardOrListText, collapseContainer } = useStyles();
   return (
     <Box className={collapseContainer}>
       <Collapse in={open}>
-        <AddCardOrListText type={type} setOpen={setOpen} />
+        <AddCardOrListText type={type} setOpen={setOpen} listId={listId} />
       </Collapse>
 
       <Collapse in={!open}>
