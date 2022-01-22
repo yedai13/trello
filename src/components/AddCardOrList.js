@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddCardorList = ({ type }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const { addCardOrListText, collapseContainer } = useStyles();
   return (
