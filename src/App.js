@@ -12,13 +12,14 @@ import uuid from "react-uuid";
 const useStyles = makeStyles((theme) => ({
   background: {
     minHeight: "100vh",
+    minWidth: "100vw",
     backgroundImage: `url(${backgoundMontain})`,
-    backgroundPosition: "center",
+    backgroundPosition: "fixed",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
   },
   container: {
-    display: "flex",
+    display: "inline-flex",
   },
 }));
 
@@ -50,11 +51,26 @@ function App() {
       ...data,
       lists: {
         ...data.lists,
-        listId: list,
+        [listId]: list,
       },
     });
   };
-  const addList = () => {};
+
+  const addList = (title) => {
+    const newListId = uuid();
+
+    setData({
+      listIds: [...data.listIds, newListId],
+      lists: {
+        ...data.lists,
+        [newListId]: {
+          id: newListId,
+          title: title,
+          cards: [],
+        },
+      },
+    });
+  };
 
   return (
     <ContextAPI.Provider value={{ addCard, addList, updateListTitle }}>
@@ -63,7 +79,11 @@ function App() {
         <Box className={container}>
           {data.listIds.map((listId) => {
             const list = data.lists[listId];
-            return <TrelloList list={list} key={listId} />;
+            return (
+              <Box>
+                <TrelloList list={list} key={listId} />
+              </Box>
+            );
           })}
 
           <AddCardOrList type="list" />

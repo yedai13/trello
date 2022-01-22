@@ -31,7 +31,7 @@ const AddCardOrListText = ({ type, setOpen, listId }) => {
 
   const handleAddCardOrList = () => {
     if (type === "card") {
-      addCard(title, listId);
+      if (title !== "") addCard(title, listId);
     } else {
       addList(title);
     }
@@ -46,7 +46,7 @@ const AddCardOrListText = ({ type, setOpen, listId }) => {
           autoFocus
           inputProps={{ className: input }}
           multiline
-          onBlur={() => setOpen(false)}
+          onBlur={handleAddCardOrList}
           onChange={(e) => setTitle(e.target.value)}
           placeholder={
             type === "card"
