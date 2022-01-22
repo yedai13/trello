@@ -15,10 +15,9 @@ const useStyles = makeStyles((theme) => ({
 
 const TrelloList = ({ list }) => {
   const { paper } = useStyles();
-  console.log(list);
   return (
     <Paper className={paper}>
-      <ListTitle titleCard={list.title} />
+      <ListTitle titleCard={list.title} listId={list.id} />
       {list.cards.map((card) => (
         <TrelloCard card={card} key={card.id} />
       ))}

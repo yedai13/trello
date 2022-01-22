@@ -1,11 +1,12 @@
+import { useState } from "react";
+import "./App.css";
 import { CssBaseline, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import TrelloList from "./components/TrelloList";
 import AddCardOrList from "./components/AddCardOrList";
 import backgoundMontain from "./img/montañas.jpg";
 import mockData from "./mockdata";
-import "./App.css";
-import { useState } from "react";
+import ContextAPI from "./ContextAPI";
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -23,18 +24,33 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const [data, setData] = useState(mockData);
   const { background, container } = useStyles();
-  return (
-    <Box className={background}>
-      <CssBaseline />
-      <Box className={container}>
-        {data.listIds.map((listId) => {
-          const list = data.lists[listId];
-          return <TrelloList list={list} key={listId} />;
-        })}
 
-        <AddCardOrList type="list" />
+  const updateListTitle = (updatedTitle, listId) => {
+    const list = data.lists[listId];
+    list.title = updatedTitle;
+    setData({
+      ...data,
+      lists: {
+        ...data.lists,
+        [listId]: list,
+      },
+    });
+  };
+
+  return (
+    <ContextAPI.Provider value={{ updateListTitle }}>
+      <Box className={background}>
+        <CssBaseline />
+        <Box className={container}>
+          {data.listIds.map((listId) => {
+            const list = data.lists[listId];
+            return <TrelloList list={list} key={listId} />;
+          })}
+
+          <AddCardOrList type="list" />
+        </Box>
       </Box>
-    </Box>
+    </ContextAPI.Provider>
   );
 }
 

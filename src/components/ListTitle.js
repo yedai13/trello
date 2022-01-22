@@ -1,7 +1,8 @@
 import { Typography, Box, InputBase } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { MoreHoriz } from "@material-ui/icons";
+import ContextAPI from "../ContextAPI";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -28,10 +29,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ListTitle = ({ titleCard }) => {
+const ListTitle = ({ titleCard, listId }) => {
   const { title, titleText, input } = useStyles();
   const [open, setOpen] = useState(false);
   const [newTitle, setNewTitle] = useState(titleCard);
+
+  const { updateListTitle } = useContext(ContextAPI);
+
+  const handleBlur = () => {
+    updateListTitle(newTitle, listId);
+    setOpen(false);
+  };
   return (
     <Box>
       {open ? (
@@ -39,13 +47,13 @@ const ListTitle = ({ titleCard }) => {
           autoFocus
           fullWidth
           inputProps={{ className: input }}
-          onBlur={() => setOpen(false)}
+          onBlur={handleBlur}
           onChange={(e) => setNewTitle(e.target.value)}
           value={newTitle}
         />
       ) : (
         <Box className={title} onClick={() => setOpen(true)}>
-          <Typography className={titleText}>{newTitle}</Typography>
+          <Typography className={titleText}>{titleCard}</Typography>
           <MoreHoriz />
         </Box>
       )}
