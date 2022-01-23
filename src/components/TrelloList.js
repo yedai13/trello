@@ -4,6 +4,7 @@ import ListTitle from "./ListTitle";
 import TrelloCard from "./TrelloCard";
 import AddCardorList from "./AddCardOrList";
 import { makeStyles } from "@material-ui/core/styles";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -13,16 +14,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TrelloList = ({ list }) => {
+const TrelloList = ({ list, index }) => {
   const { paper } = useStyles();
   return (
-    <Paper className={paper}>
-      <ListTitle titleCard={list.title} listId={list.id} />
-      {list.cards.map((card, index) => (
-        <TrelloCard card={card} key={card.id} index={index} />
-      ))}
-      <AddCardorList type="card" listId={list.id} />
-    </Paper>
+    <Draggable draggableId={list.id} index={index}>
+      {(provided) => (
+        <div {...provided.draggableProps} ref={provided.innerRef}>
+          <Paper className={paper}>
+            <ListTitle titleCard={list.title} listId={list.id} />
+            <Droppable droppableId={list.id}>
+              {(provided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  {list.cards.map((card, index) => (
+                    <TrelloCard card={card} key={card.id} index={index} />
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+            <AddCardorList type="card" listId={list.id} />
+          </Paper>
+        </div>
+      )}
+    </Draggable>
   );
 };
 
