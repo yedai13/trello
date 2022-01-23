@@ -8,6 +8,7 @@ import backgoundMontain from "./img/montañas.jpg";
 import mockData from "./mockdata";
 import ContextAPI from "./ContextAPI";
 import uuid from "react-uuid";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -72,22 +73,35 @@ function App() {
     });
   };
 
+  const onDragEnd = () => {};
+
   return (
     <ContextAPI.Provider value={{ addCard, addList, updateListTitle }}>
       <Box className={background}>
         <CssBaseline />
-        <Box className={container}>
-          {data.listIds.map((listId) => {
-            const list = data.lists[listId];
-            return (
-              <Box>
-                <TrelloList list={list} key={listId} />
-              </Box>
-            );
-          })}
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="1" type="list" direction="horizontal">
+            {(provided) => (
+              <Box
+                className={container}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {data.listIds.map((listId) => {
+                  const list = data.lists[listId];
+                  return (
+                    <Box>
+                      <TrelloList list={list} key={listId} />
+                    </Box>
+                  );
+                })}
 
-          <AddCardOrList type="list" />
-        </Box>
+                <AddCardOrList type="list" />
+                {provided.placeholder}
+              </Box>
+            )}
+          </Droppable>
+        </DragDropContext>
       </Box>
     </ContextAPI.Provider>
   );
